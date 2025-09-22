@@ -2,17 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>СОГБУ "ЦОДД" - Демо</title>
+    <title>Карта ДТП</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
     <script src="https://mapgl.2gis.com/api/js/v1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="topbar" role="region" aria-label="Информационная панель">
         <div class="inner">
             <div class="hotline">
                 <span style="opacity:.85">Горячая линия ЦОДД:</span>
-                <b>+7 (800) 100-70-10</b>
+                <b><a href="tel:+78001007010" style="color: var(--accent)">+7 (800) 100-70-10</a></b>
                 <span style="margin-left:8px; color:rgba(255,255,255,0.85); font-size:13px">|</span>
                 <span style="opacity:.7; margin-left:8px; font-size:13px">Отключат светофоры на ул. Нормандия-Неман</span>
             </div>
@@ -26,8 +27,7 @@
     <header class="main-header" role="banner">
         <div class="header-inner">
             <div class="logo">
-                <div class="icon" aria-hidden="true">ЦОД</div>
-                <h1>СОГБУ «ЦОДД»</h1>
+                <a href="#your_domain"><img src="image/logo_main.png" alt="main_logo" class="main_logo" style="scale: 1.4; width: 150px; display: flex; align-items: center; justify-content: center"></a>
             </div>
 
             <nav class="site-nav" role="navigation" aria-label="Основное меню">
@@ -97,10 +97,6 @@
                 </div>
             </div>
         </div>
-
-        <footer>
-            <p>© 2025 Карта дорожных происшествий Смоленска | Данные обновляются в реальном времени</p>
-        </footer>
     </div>
 
 <script src="map.js"></script>

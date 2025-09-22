@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
     <script src="https://mapgl.2gis.com/api/js/v1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="topbar" role="region" aria-label="Информационная панель">
         <div class="inner">
             <div class="hotline">
                 <span style="opacity:.85">Горячая линия ЦОДД:</span>
-                <b>+7 (800) 100-70-10</b>
+                <b><a href="tel:+78001007010" style="color: var(--accent)">+7 (800) 100-70-10</a></b>
                 <span style="margin-left:8px; color:rgba(255,255,255,0.85); font-size:13px">|</span>
                 <span style="opacity:.7; margin-left:8px; font-size:13px">Отключат светофоры на ул. Нормандия-Неман</span>
             </div>
@@ -26,8 +27,7 @@
     <header class="main-header" role="banner">
         <div class="header-inner">
             <div class="logo">
-                <div class="icon" aria-hidden="true">ЦОД</div>
-                <h1>СОГБУ «ЦОДД»</h1>
+                <a href="#your_domain"><img src="image/logo_main.png" alt="main_logo" class="main_logo" style="scale: 1.4; width: 150px; display: flex; align-items: center; justify-content: center"></a>
             </div>
 
             <nav class="site-nav" role="navigation" aria-label="Основное меню">
@@ -49,24 +49,45 @@
     <section class="hero" aria-label="Главный баннер">
         <div class="hero__bg" aria-hidden="true"></div>
         <div class="hero__overlay" aria-hidden="true"></div>
-
         <div class="hero__content">
-            <h2 class="hero__title">Центр организации дорожного движения</h2>
+            <h2 class="hero__title" style="font-size: 60px; font-weight: 700">Центр организации дорожного движения</h2>
         </div>
-
-        <div class="video-badge">видео</div>
     </section>
 
-    <main style="max-width:var(--max-width); margin:28px auto; padding:0 16px;">
+    <section class="main_section">
+        <div class="main_container">
+            <h1>Актуально сейчас</h1>
+            <div class="mini_container">
+                <div class="mini_item">
+                    <h1>Актуальные перекрытия</h1>
+                    <p>Ограничения движения и изменения в работе городского транспорта</p>
+                </div>
+                <div class="mini_item">
+                    <h1>Актуальные перекрытия</h1>
+                    <p>Ограничения движения и изменения в работе городского транспорта</p>
+                </div>
+                <div class="mini_item">
+                    <h1>Актуальные перекрытия</h1>
+                    <p>Ограничения движения и изменения в работе городского транспорта</p>
+                </div>
+                <div class="mini_item">
+                    <h1>Актуальные перекрытия</h1>
+                    <p>Ограничения движения и изменения в работе городского транспорта</p>
+                </div>
+                <div class="mini_item">
+                    <h1>Актуальные перекрытия</h1>
+                    <p>Ограничения движения и изменения в работе городского транспорта</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main style="max-width:var(--max-width); margin:28px auto; padding:0 16px; border-radius: 14px 14px 0px 0px;">
         <!-- здесь можно добавить блоки сервисов/новостей -->
         <section aria-labelledby="about-title">
             <h3 id="about-title" style="font-size:20px; margin:0 0 12px 0; color:var(--dark)">Последние обновления</h3>
             <p style="color:var(--muted); margin-top:6px">Новости и оперативная информация об ограничениях и дорожных происшествиях.</p>
         </section>
     </main>
-
-    <footer class="site-footer" role="contentinfo">
-        © 2025 Карта дорожных происшествий — данные обновляются в реальном времени
-    </footer>
 </body>
 </html>
