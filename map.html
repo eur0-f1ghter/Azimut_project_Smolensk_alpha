@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>СОГБУ "ЦОДД" - Демо</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
+    <script src="https://mapgl.2gis.com/api/js/v1"></script>
+</head>
+<body>
+    <div class="topbar" role="region" aria-label="Информационная панель">
+        <div class="inner">
+            <div class="hotline">
+                <span style="opacity:.85">Горячая линия ЦОДД:</span>
+                <b>+7 (800) 100-70-10</b>
+                <span style="margin-left:8px; color:rgba(255,255,255,0.85); font-size:13px">|</span>
+                <span style="opacity:.7; margin-left:8px; font-size:13px">Отключат светофоры на ул. Нормандия-Неман</span>
+            </div>
+            <div>
+                <span class="news-pill">НОВОСТИ</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- main header -->
+    <header class="main-header" role="banner">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="icon" aria-hidden="true">ЦОД</div>
+                <h1>СОГБУ «ЦОДД»</h1>
+            </div>
+
+            <nav class="site-nav" role="navigation" aria-label="Основное меню">
+                <ul>
+                    <li><a href="index.html" class="active">Главная</a></li>
+                    <li><a href="map.html">Карта</a></li>
+                    <li><a href="#">Новости</a></li>
+                    <li><a href="#">Аналитика</a></li>
+                    <li><a href="#">Документы</a></li>
+                    <li><a href="#">О центре</a></li>
+                </ul>
+            </nav>
+
+            <a class="cta" href="#" role="button">Сообщить о проблеме</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car-crash"></i>
+                    <h1>ДТП Смоленск</h1>
+                </div>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">Все</button>
+                    <button class="filter-btn" data-filter="today">Сегодня</button>
+                    <button class="filter-btn" data-filter="serious">Серьёзные</button>
+                    <button class="filter-btn" data-filter="center">Центр</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="map-container">
+                <div id="map"></div>
+                <div class="map-controls">
+                    <button class="control-btn" id="zoom-in"><i class="fas fa-plus"></i></button>
+                    <button class="control-btn" id="zoom-out"><i class="fas fa-minus"></i></button>
+                    <button class="control-btn" id="current-location"><i class="fas fa-location-arrow"></i></button>
+                    <button class="control-btn" id="reset-view"><i class="fas fa-globe"></i></button>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2><i class="fas fa-list"></i> Происшествия</h2>
+                    <div class="last-update">Обновлено: <span id="update-time">только что</span></div>
+                </div>
+                <div class="incident-list" id="incident-list">
+                    <!-- Список будет заполнен через JavaScript -->
+                </div>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-accidents">0</div>
+                        <div class="stat-label">Всего ДТП</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="today-accidents">0</div>
+                        <div class="stat-label">Сегодня</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="serious-accidents">0</div>
+                        <div class="stat-label">Серьёзные</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 Карта дорожных происшествий Смоленска | Данные обновляются в реальном времени</p>
+        </footer>
+    </div>
+
+<script src="map.js"></script>
+</body>
+</html>
