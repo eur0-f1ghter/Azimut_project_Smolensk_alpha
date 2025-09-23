@@ -6,6 +6,7 @@
     --max-width:1200px;
     --hover-text-color: #0b71d5;
     --color-main: #62a744;
+    --color-side: #f5f5fb
 }
 
 /* --- Reset / base --- */
@@ -15,7 +16,7 @@ body{
     margin:0;
     font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     color:#222;
-    background:#F5F5Fb;
+    background:var(--color-side);
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
 }
@@ -46,7 +47,7 @@ body{
     position: relative;
     height: 0.1rem;
     width: 100%;
-    background: linear-gradient(to right, #326767, #F5F5Fb);
+    background: linear-gradient(to right, #326767, var(--color-side));
     background-size: 0% 100%;
     bottom: -0.1rem;
     transition: 1.5s;
@@ -97,9 +98,8 @@ body{
     height:700px;
     margin:10px auto;
     padding:10px 90px;
-    background:var(--white);
-    border-radius:30px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    background: linear-gradient(to bottom, var(--white), #F5F5Fb);
+    border-radius:30px 30px 0 0;
     z-index: 1;
 }
 
@@ -112,11 +112,11 @@ body{
 .container-2{
     width:1200px;
     min-height:300px;
-    margin:10px auto 0px;
+    margin:1000px auto 0px;
     padding:10px 90px;
     background:var(--white);
     border-radius:30px 30px 0 0;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
     z-index: 1;
 }
 
@@ -137,14 +137,15 @@ body{
 .mini_item{
     width:200px;
     height:300px;
-    background: white;
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    background: var(--white);
     border-radius:25px;
-    transition: transform 0.3s;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .mini_item:hover{
     transform: translateY(-10px);
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
 .mini_item h1{
@@ -162,7 +163,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 90px auto;
+    margin: 90px auto 50px;
     gap: 560px;
     text-align: center;
 }
@@ -231,6 +232,85 @@ body{
     height: 2px;
     background-color: var(--color-main);
 }
+/* --- 1.table news on main page --- */
+.table_news {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 70px;
+    margin: 20px auto;
+}
+
+.table_news_container {
+    max-width: 500px;
+    height: 150px;
+    background: var(--white);
+    text-decoration: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.table_news_container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.main_about{
+    display:flex;
+    margin: 50px auto 20px;
+    gap: 10px;
+}
+
+.main_about_container_mini {
+    max-width: 400px;
+    height: 300px;
+    background: var(--white);
+    text-decoration: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main_about_container_mini:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.main_about_container_big {
+    display: flex;
+    gap: 50px;
+    width: 1000px;
+    height:400px;
+    background: var(--white);
+    border-radius: 25px;
+    padding: 10px 20px;
+    margin: 10px auto;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main_about_container_big:hover{
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.main_about_container_big_table{
+    display: flex;
+    gap: 100px;
+    width: 500px;
+}
+
+.main_about_container_big_text{
+    width: 500px;
+}
+
+.main_about_container_big_video{
+    width: 500px;
+}
+
 
 /* --- Header --- */
 header.main-header{
@@ -350,7 +430,7 @@ nav.site-nav{
     align-items:flex-end;
 }
 .hero__title{
-    color:#fff;
+    color:var(--white);
     font-size:48px;
     line-height:1.02;
     font-weight:800;
@@ -366,7 +446,7 @@ nav.site-nav{
     z-index:3;
     background:rgba(255,255,255,0.08);
     border:1px solid rgba(255,255,255,0.12);
-    color:#fff;
+    color:var(--white);
     padding:8px 10px;
     border-radius:10px;
     font-weight:600;
@@ -392,7 +472,7 @@ footer.site-footer{
 
 header {
     background: linear-gradient(135deg, #2c3e50, #4a6491);
-    color: white;
+    color: var(--white);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -431,7 +511,7 @@ header {
 .filter-btn {
     background: rgba(255, 255, 255, 0.2);
     border: none;
-    color: white;
+    color: var(--white);
     padding: 8px 15px;
     border-radius: 20px;
     cursor: pointer;
@@ -471,7 +551,7 @@ header {
 
 .sidebar {
     flex: 3;
-    background: white;
+    background: var(--white);
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
