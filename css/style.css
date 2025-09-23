@@ -111,7 +111,7 @@ body{
 
 .container-2{
     width:1200px;
-    min-height:250px;
+    min-height:300px;
     margin:10px auto 0px;
     padding:10px 90px;
     background:var(--white);
@@ -207,6 +207,15 @@ body{
     gap:500px;
 }
 
+.lower_bar_3{
+    display: flex;
+    margin: 10px auto;
+    align-items: center;
+    justify-content: center;
+    gap:500px;
+    float: right;
+}
+
 .lower_bar_1_item{
     display: grid;
     font-size: 14px;
@@ -297,6 +306,11 @@ nav.site-nav{
     text-decoration:none;
     box-shadow:0 6px 18px rgba(255,140,43,0.12);
     white-space:nowrap;
+    transition: transform 0.3s ease;
+}
+
+.cta:hover{
+    transform: scale(1.05);
 }
 
 /* --- Hero --- */
