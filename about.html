@@ -2,26 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>СОГБУ "ЦОДД" - Новости</title>
+    <title>О нас</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
     <script src="https://mapgl.2gis.com/api/js/v1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="text/javascript" src="map.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <div class="topbar" role="region" aria-label="Информационная панель">
         <div class="inner">
             <div class="hotline">
                 <span style="opacity:.85">Горячая линия ЦОДД:</span>
-                <b><a href="tel:+78001007010" style="color: var(--accent)">+7 (800) 100-70-10</a></b>
+                <b><a href="tel:+78001007010" style="color: var(--accent); text-decoration: none">+7 (800) 100-70-10</a></b>
                 <span style="margin-left:8px; color:rgba(255,255,255,0.85); font-size:13px">|</span>
                 <span style="opacity:.7; margin-left:8px; font-size:13px">Отключат светофоры на ул. Нормандия-Неман</span>
             </div>
             <div>
-                <span class="news-pill">НОВОСТИ</span>
+                <a href="news.html" style="text-decoration: none"><span class="news-pill">НОВОСТИ</span></a>
             </div>
         </div>
     </div>
@@ -34,17 +38,19 @@
             </div>
             <nav class="site-nav" role="navigation" aria-label="Основное меню">
                 <ul>
-                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="index.html" class="active">Главная</a></li>
                     <li><a href="map.html">Карта</a></li>
-                    <li><a href="news.html" class="active">Новости</a></li>
+                    <li><a href="news.html">Новости</a></li>
                     <li><a href="#">Аналитика</a></li>
                     <li><a href="#">Документы</a></li>
-                    <li><a href="#">О центре</a></li>
+                    <li><a href="about.html" class="active">О ЦОДД</a></li>
                 </ul>
             </nav>
             <a class="cta" href="https://pos.gosuslugi.ru/form/?opaId=222162&utm_source=vk&utm_medium=66&utm_campaign=1086731003237" role="button">Сообщить о проблеме</a>
         </div>
     </header>
+
+
 
 
 </body>
