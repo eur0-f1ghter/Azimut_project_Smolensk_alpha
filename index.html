@@ -14,6 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
     <div class="topbar" role="region" aria-label="Информационная панель">
@@ -63,10 +64,12 @@
         <div class="bg-gradient-custom main_container mt-3">
             <h1>Актуально сейчас</h1>
             <div class="mini_container">
-                <div class="mini_item">
-                    <h1 class="mt-4">Актуальные перекрытия</h1>
-                    <p class="mt-3">Ограничения движения и изменения в работе городского транспорта</p>
-                </div>
+                <a href="https://www.smoladmin.ru/press-centr/dvizhenie-transporta/" style="text-decoration: none">
+                    <div class="mini_item">
+                        <h1 class="mt-4">Актуальные перекрытия</h1>
+                        <p class="mt-3">Ограничения движения и изменения в работе городского транспорта</p>
+                    </div>
+                </a>
                 <div class="mini_item">
                     <h1 class="mt-4">ПРОдвижение</h1>
                     <p class="mt-3">Что мы сделали для жителей в 2025 году</p>
@@ -100,15 +103,18 @@
             <h1>Главное</h1>
             <div class="main_about">
                 <div class="main_about_container_mini">
-                    <p class="mt-3" style="color: var(--color-main); font-size: 24px; font-weight: 700">Как ЦОДД помогает городу?</p>
+                    <i class="ri-service-fill" style="font-size: 64px; color: var(--color-main)"></i>
+                    <p style="color: var(--color-main); font-size: 24px; font-weight: 700; margin: 2px 0px">Как ЦОДД помогает городу?</p>
                     <p style="font-weight: 550; font-size: 16px">Улучшаем дорожную ситуацию, развиваем инфраструктуру и применяем информационные технологии</p>
                 </div>
                 <div class="main_about_container_mini">
-                    <p class="mt-3 " style="color: var(--color-main); font-size: 24px; font-weight: 700">Инфраструктура ЦОДД на карте Смоленска</p>
+                    <i class="ri-road-map-line" style="font-size: 60px; color: var(--color-main); margin: 5px 0px"></i>
+                    <p style="color: var(--color-main); font-size: 24px; font-weight: 700; margin: 2px 0px">Инфраструктура ЦОДД на карте Смоленска</p>
                     <p style="font-weight: 550; font-size: 16px">Дорожные камеры, светофоры, стелы, велополосы и велодорожки</p>
                 </div>
                 <div class="main_about_container_mini">
-                    <p class="mt-3" style="color: var(--color-main); font-size: 24px; font-weight: 700">Открытые вакансии ЦОДД</p>
+                    <i class="ri-contacts-book-2-line" style="font-size: 64px; color: var(--color-main)"></i>
+                    <p style="color: var(--color-main); font-size: 24px; font-weight: 700; margin: 2px 0px">Открытые вакансии ЦОДД</p>
                     <p style="font-weight: 550; font-size: 16px">Стань частью команды: мы делаем Смоленск комфортнее и безопаснее</p>
                 </div>
             </div>
@@ -157,8 +163,8 @@
     </section>
 
     <div class="monitor_dtp_main_container">
-        <h1 class="mt-4" style="color: var(--white); font-weight: 700">Мониторинг аварийности</h1>
-        <p class="mt-3" style="color: var(--white); font-weight: 700">Это платформа сбора данных о ДТП с пострадавшими, которые произошли в Смоленске</p>
+        <h1 class="mt-4" style="color: black">Мониторинг аварийности</h1>
+        <p class="mt-3" style="color: black">Это платформа сбора данных о ДТП с пострадавшими, которые произошли в Смоленске</p>
         <div class="monitor_dtp_container">
             <p class="mt-3" style="color: var(--white); font-weight: 700; height: 30px">Показатели за текущий месяц</p>
             <div class="monitor_dtp_container_main">
@@ -200,7 +206,35 @@
                 <a href="map.html"><button class="maps-btn mx-auto">Смотреть ДТП на карте</button></a>
             </div>
         </div>
-        <h1>Аналитика</h1>
+        <h1>Сервисы</h1>
+        <div class="main_services">
+            <a href="https://dtpax.ru/proekty/mobilnye-prilozheniya/smolenskaya-oblast-smolenskaya-oblast-transport/" style="text-decoration: none">
+                <div class="main_services_container_mini">
+                    <p style="color: var(--color-main); font-size: 24px; font-weight: 700; margin: 2px 0px">Смоленская область транспорт</p>
+                    <p style="font-weight: 550; font-size: 14px; color: black">Маршруты, расписание и остановки</p>
+                    <img src="image/smolensk_transport.jpg" alt="smolensk_transport" class="smolensk_transport" style="width: 200px; scale: 0.6; margin: -70px auto 0px">
+                </div>
+            </a>
+            <a href="https://smolavtovokzal.ru/" style="text-decoration: none">
+                <div class="main_services_container_mini">
+                    <p style="color: var(--color-main); font-size: 24px; font-weight: 700; margin: 2px 0px">Смоленсикй Автовокзал</p>
+                    <p style="font-weight: 550; font-size: 14px; color: black">Дорожные камеры, светофоры, стелы, велополосы и велодорожки</p>
+                    <img src="image/smolensk_bus_station.jpg" alt="smolensk_bus_station" class="smolensk_bus_station" style="width: 200px; scale: 0.6; margin: -55px auto 0">
+                </div>
+            </a>
+            <a href="https://www.admin-smolensk.ru/applications/" style="text-decoration: none">
+                <div class="main_services_container_mini">
+                    <p style="color: var(--color-main); font-size: 24px; font-weight: 700; margin: 2px 0px">Интернет-приёмная</p>
+                    <p style="font-weight: 550; font-size: 14px; color: black">Оставьте обращение, чтобы сделать город лучше</p>
+                    <i class="ri-chat-ai-fill" style="display: flex; align-items: center; justify-content: center; font-size: 100px; margin: 110px auto 20px; color: var(--color-main)"></i>
+                </div>
+            </a>
+            <div class="main_services_container_mini">
+                <p style="color: var(--color-main); font-size: 24px; font-weight: 700; margin: 2px 0px">Министерство транспорта и дорожного хозяйства</p>
+                <p style="font-weight: 550; font-size: 14px">Можете узнать информацию о перевозчике, и о всех нормативных актах</p>
+                <i class="ri-kakao-talk-fill" style="display: flex; align-items: center; justify-content: center; font-size: 100px; color: var(--color-main)"></i>
+            </div>
+        </div>
     </div>
 
     <!-- <main style="max-width:var(--max-width); margin:28px auto; padding:0 16px; border-radius: 14px 14px 0px 0px;"> -->

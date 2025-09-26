@@ -69,7 +69,8 @@ function initMap() {
     map = new mapgl.Map('map', {
         center: initialCenter,
         zoom: 13,
-        key: '37ce27af-2f55-493a-996f-f4d3d50036b9' // Замените на свой ключ
+        key: '37ce27af-2f55-493a-996f-f4d3d50036b9', // Замените на свой ключ
+        zoomControl: false
     });
 
     // Добавляем маркеры на карту после её загрузки
