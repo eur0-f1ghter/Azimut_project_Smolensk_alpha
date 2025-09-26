@@ -24,11 +24,14 @@
                     <li><a href="map.html" class="active">Карта</a></li>
                     <li><a href="news.html">Новости</a></li>
                     <li><a href="#">Аналитика</a></li>
-                    <li><a href="#">Документы</a></li>
+                    <li><a href="documents.html">Документы</a></li>
                     <li><a href="#">О центре</a></li>
                 </ul>
             </nav>
             <a class="cta" href="https://pos.gosuslugi.ru/form/?opaId=222162&utm_source=vk&utm_medium=66&utm_campaign=1086731003237" role="button">Сообщить о проблеме</a>
+        </div>
+        <div class="burger">
+            <span></span>
         </div>
     </header>
 
@@ -85,6 +88,13 @@
             </div>
         </div>
     </div>
+
+ <script>
+     document.querySelector('.burger').addEventListener('click', function() {
+         this.classList.toggle('active');
+         document.querySelector('.menu').classList.toggle('open');
+     })
+ </script>
 
 <script src="map.js"></script>
 </body>

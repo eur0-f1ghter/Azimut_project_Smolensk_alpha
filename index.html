@@ -17,6 +17,18 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
+
+    <div id="preloader" class="preloader" aria-hidden="false">
+        <div class="logo-wrap" role="img" aria-label="Логотип и индикатор загрузки">
+            <img src="image/logo_main.png" alt="Логотип">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+                <circle class="ring-bg" cx="50" cy="50" r="44"></circle>
+                <circle id="progress-ring" class="ring" cx="50" cy="50" r="44"
+                        stroke-dasharray="276.46" stroke-dashoffset="276.46"></circle>
+            </svg>
+        </div>
+    </div>
+
     <div class="topbar" role="region" aria-label="Информационная панель">
         <div class="inner">
             <div class="hotline">
@@ -42,19 +54,24 @@
                     <li><a href="index.html" class="active">Главная</a></li>
                     <li><a href="map.html">Карта</a></li>
                     <li><a href="news.html">Новости</a></li>
-                    <li><a href="#">Аналитика</a></li>
+                    <li><a href="crew.html">Команда</a></li>
                     <li><a href="documents.html">Документы</a></li>
-                    <li><a href="#">О ЦОДД</a></li>
+                    <li><a href="about.html">О ЦОДД</a></li>
                 </ul>
             </nav>
             <a class="cta" href="https://pos.gosuslugi.ru/form/?opaId=222162&utm_source=vk&utm_medium=66&utm_campaign=1086731003237" role="button">Сообщить о проблеме</a>
+        </div>
+        <div class="burger">
+            <span></span>
         </div>
     </header>
 
     <!-- hero -->
     <section class="hero" aria-label="Главный баннер">
         <div class="hero__bg" aria-hidden="true"></div>
-        <div class="hero__overlay" aria-hidden="true"></div>
+        <div class="hero__overlay" aria-hidden="true">
+            <img src="image/26eade7d7cb74a851da66e655a99d9f3-1.jpg" alt="main_image" class="hero__img" style="width: 1900px; height: 400px;">
+        </div>
         <div class="hero__content">
             <h2 class="hero__title" style="font-size: 60px; font-weight: 700">Центр организации дорожного движения</h2>
         </div>
@@ -64,26 +81,30 @@
         <div class="bg-gradient-custom main_container mt-3">
             <h1>Актуально сейчас</h1>
             <div class="mini_container">
-                <a href="https://www.smoladmin.ru/press-centr/dvizhenie-transporta/" style="text-decoration: none">
-                    <div class="mini_item">
-                        <h1 class="mt-4">Актуальные перекрытия</h1>
-                        <p class="mt-3">Ограничения движения и изменения в работе городского транспорта</p>
-                    </div>
-                </a>
+                <div class="mini_item">
+                    <h1 class="mt-4">Актуальные перекрытия</h1>
+                    <p class="mt-3">Ограничения движения и изменения в работе городского транспорта</p>
+                    <a href="https://www.smoladmin.ru/press-centr/dvizhenie-transporta/" style="display: flex; align-items: center; justify-content: center; text-decoration: none; margin: 90px auto 30px"><button class="news-btn">Ознакомится</button></a>
+                </div>
+
                 <div class="mini_item">
                     <h1 class="mt-4">ПРОдвижение</h1>
                     <p class="mt-3">Что мы сделали для жителей в 2025 году</p>
+                    <a href="https://www.smoladmin.ru/press-centr/dvizhenie-transporta/" style="display: flex; align-items: center; justify-content: center; text-decoration: none; margin: 125px auto 30px"><button class="news-btn">Ознакомится</button></a>
                 </div>
                 <div class="mini_item">
                     <h1 class="mt-4">Гараж ЦОДД</h1>
+                    <a href="https://www.smoladmin.ru/press-centr/dvizhenie-transporta/" style="display: flex; align-items: center; justify-content: center; text-decoration: none; margin: 175px auto 30px"><button class="news-btn">Ознакомится</button></a>
                 </div>
                 <div class="mini_item">
                     <h1 class="mt-4">Европротокол</h1>
                     <p class="mt-3">5 простых шагов, чтобы оформить мелкое ДТП в безопасном месте</p>
+                    <a href="https://www.smoladmin.ru/press-centr/dvizhenie-transporta/" style="display: flex; align-items: center; justify-content: center; text-decoration: none; margin: 105px auto 30px"><button class="news-btn">Ознакомится</button></a>
                 </div>
                 <div class="mini_item">
                     <h1 class="mt-4">Развитие</h1>
                     <p class="mt-3">Что мы планируем сделать в этом году</p>
+                    <a href="https://www.smoladmin.ru/press-centr/dvizhenie-transporta/" style="display: flex; align-items: center; justify-content: center; text-decoration: none; margin: 121px auto 30px"><button class="news-btn">Ознакомится</button></a>
                 </div>
             </div>
             <div class="news_bar-main_page">
@@ -268,7 +289,17 @@
         </div>
     </section>
 
+    <script>
+        document.querySelector('.burger').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.menu').classList.toggle('open');
+        })
+    </script>
+
     <script src="map.js"></script>
     <script src="chart.js"></script>
+    <script src="preloader.js"></script>
+
+<!-- Azimut team -->
 </body>
 </html>

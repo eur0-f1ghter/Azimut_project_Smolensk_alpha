@@ -24,6 +24,76 @@ body{
     -moz-osx-font-smoothing:grayscale;
 }
 
+.preloader {
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:white;
+    z-index:9999;
+    transition:opacity .5s ease, visibility .5s;
+    visibility:visible;
+    opacity:1;
+}
+.preloader.hidden {
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.logo-wrap {
+    position:relative;
+    width:160px;
+    height:160px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.logo-wrap img {
+    width:96px;
+    height:96px;
+    object-fit:contain;
+    border-radius:12px;
+    display:block;
+    z-index:2;
+    box-shadow:0 8px 24px rgba(0,0,0,0.25);
+}
+
+/* svg занимает весь контейнер */
+.logo-wrap svg {
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+    transform:rotate(-90deg); /* чтобы 0% был сверху */
+}
+
+/* стиль круга фона (серый) */
+.ring-bg {
+    stroke:#222;
+    stroke-opacity:0.15;
+    stroke-width:8;
+    fill:none;
+}
+
+.ring {
+    stroke: #50c878;
+    stroke-width:8;
+    stroke-linecap:round;
+    fill:none;
+    transition:stroke-dashoffset 0.2s linear;
+    animation: load 2s linear forwards;
+}
+
+@keyframes load {
+    to { stroke-dashoffset: 0; }
+}
+
+body.loaded .content {opacity:1;}
+
 .map{
     overflow-y: hidden;
 }
@@ -61,7 +131,7 @@ body::-webkit-scrollbar {
     background: linear-gradient(to right, #326767, var(--color-side));
     background-size: 0% 100%;
     bottom: -0.1rem;
-    transition: 1.5s;
+    transition: 2.5s;
 }
 
 .site-nav a:hover:before {
@@ -109,7 +179,7 @@ body::-webkit-scrollbar {
     height:700px;
     margin:10px auto;
     padding:10px 90px;
-    background: linear-gradient(to top, var(--white), #F5F5Fb);
+    background: var(--white);
     border-radius:30px 30px 0 0;
     z-index: 1;
 }
@@ -411,23 +481,7 @@ body::-webkit-scrollbar {
     background: var(--color-mini-monitor);
     border-radius: 15px;
 }
-/* --- button bootstrap --- */
-.badge-severity-high{
-    color: #ff6b6b;
-}
-
-.badge-severity-low{
-    color: #a4b0be;
-}
-
-.badge-severity-medium{
-    color: #f9ca24;
-}
-
-.badge-severity-default{
-    color: #a4b0be;
-}
-
+/* --- button monitor container --- */
 .severity-filter{
     transition: transform 0.3s ease;
 }
@@ -454,7 +508,7 @@ body::-webkit-scrollbar {
 
 .doc_card{
     width:270px;
-    height:400px;
+    height:300px;
     background: var(--white);
     border-radius:25px;
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
@@ -468,26 +522,26 @@ body::-webkit-scrollbar {
 
 /* --- news page ---*/
 .container_news_main {
-    max-width: 800px;
+    max-width: 600px;
     height: 300px;
-    margin: 20px auto 10px;
+    margin: 10px auto 5px;
     background-color: #fff;
-    padding: 45px 120px 45px 120px;
+    padding: 25px 60px 25px 60px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .container_news_side {
-    max-width: 800px;
+    max-width: 600px;
     margin: 20px auto;
     background-color: #fff;
-    padding: 45px 120px 45px 120px;
+    padding: 25px 60px 25px 60px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .release-notes {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .release-notes a {
@@ -525,6 +579,49 @@ body::-webkit-scrollbar {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* --- About page --- */
+.about_container {
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto;
+}
+
+.about_h1{
+    text-align: center;
+    margin: 50px auto 10px;
+}
+
+/* --- crew page --- */
+.team_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 10px 100px;
+}
+
+.team_main_containers{
+    width:360px;
+    height:200px;
+    background: var(--white);
+    text-decoration: none;
+    border-radius: 25px;
+    padding: 30px 30px 40px 30px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.team_main_containers h1{
+    font-size: 32px;
+    margin: 0px auto 10px;
+}
+
+.main_team_container{
+    margin: 10px auto;
+    padding: 60px 0px;
 }
 /* --- Header --- */
 header.main-header{
@@ -951,7 +1048,83 @@ footer {
     font-style: italic;
 }
 
-@media (max-width: 900px) {
+/* --- burger menu ---*/
+
+.burger {
+    display: none;
+    position: relative;
+    z-index: 50;
+    transform: translateY(10%);
+    align-items: center;
+    justify-content: flex-end;
+    width: 60px;
+    height: 36px;
+}
+
+.burger span {
+    height: 2px;
+    width: 80%;
+    transform: scale(1);
+    background-color: #326767;
+}
+
+.burger::before, .burger::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background-color: #326767;
+    transition: all 0.3s ease 0s;
+}
+
+.burger::before {top: 0}
+
+.burger::after {bottom: 0}
+
+.burger.active span {transform: scale(0)}
+
+.burger.active::before {
+    top: 50%;
+    transform: rotate(-45deg) translate(0,-50%);
+}
+
+.burger.active::after {
+    bottom: 50%;
+    transform: rotate(45deg) translate(0,50%);
+}
+
+@media screen and (max-width: 1080px) {
+
+    .burger {display: flex; right: -230px}
+
+    .menu {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        height: 155px;
+        width: 100%;
+        z-index: 1;
+        top: 240px;
+        overflow-y: auto;
+        padding: 5px 75px 100px;
+        background-color: #F5F5Fb;
+        animation: burgerAnimation 0.4s;
+        justify-content: flex-start;
+        text-align: right;
+    }
+
+    .menu ul {
+        display: flex;
+        row-gap: 30px;
+        transform: translateY(200%);
+    }
+
+    .menu ul li {
+        margin-bottom: 75px;
+        justify-content: space-between;
+        margin-left: -209px;
+    }
+
     .main-content {
         flex-direction: column;
     }
