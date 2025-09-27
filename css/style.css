@@ -1092,9 +1092,9 @@ footer {
     transform: rotate(45deg) translate(0,50%);
 }
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 1100px) {
 
-    .burger {display: flex; right: -230px}
+    .burger {display: flex; right: -330px}
 
     .menu {
         display: none;
@@ -1122,6 +1122,17 @@ footer {
         margin-bottom: 75px;
         justify-content: space-between;
         margin-left: -209px;
+    }
+
+    .preloader {
+        width: 80%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .topbar {
+        z-index: 2;
+        position: relative;
     }
 
     .main-content {
