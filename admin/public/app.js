@@ -259,7 +259,7 @@ app.get('/api/admin-data', (req, res) => {
 
 // fallback to serve login page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // ------------- Start server with automatic port fallback -------------

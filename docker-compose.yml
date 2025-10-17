@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: admin/public/Dockerfile
+    container_name: azimut-team-nginx
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+  node:
+    build:
+      context: .
+      dockerfile: admin/Dockerfile
+    container_name: azimut-team-node
+    expose:
+      - "5000"
+    ports:
+      - "3000:5000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
