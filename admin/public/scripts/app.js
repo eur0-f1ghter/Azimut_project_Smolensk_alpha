@@ -11,6 +11,12 @@ class TrafficAnalyzerApp {
 
     initMap() {
         ymaps.ready(() => {
+            // Reuse global map/clusterer if already initialized to avoid creating multiple maps on the same container
+            if (window.map && window.clusterer) {
+                this.map = window.map;
+                this.clusterer = window.clusterer;
+                return;
+            }
             this.map = new ymaps.Map("map", {
                 center: [54.7761, 32.0563],
                 zoom: 10
@@ -19,6 +25,9 @@ class TrafficAnalyzerApp {
                 preset: 'islands#invertedClusterIcons'
             });
             this.map.geoObjects.add(this.clusterer);
+            // Expose globally so other modules reuse the same instances
+            window.map = this.map;
+            window.clusterer = this.clusterer;
         });
 
     }
@@ -44,7 +53,7 @@ class TrafficAnalyzerApp {
         status.textContent = 'Загружаю данные...';
 
         try {
-            const resp = await fetch('http://localhost:5001/upload/convoy', {
+            const resp = await fetch('/upload/convoy', {
                 method: 'POST',
                 body: formData
             });
@@ -87,6 +96,11 @@ class TrafficAnalyzerApp {
     }
 
     showAllDetectors() {
+        // Delegate to shared updater to avoid duplicate points and multiple collections
+        if (typeof window.updateAllDetectorsOnMap === 'function') {
+            window.updateAllDetectorsOnMap();
+            return;
+        }
         if (!this.clusterer || !window.allDetectorsData || !window.allDetectorsData.length) {
             console.error("Нет данных детекторов или clusterer не инициализирован");
             return;
@@ -115,7 +129,10 @@ class TrafficAnalyzerApp {
 
         this.clusterer.add(placemarks);
         try {
-            this.map.setBounds(this.clusterer.getBounds(), { checkZoomRange: true, zoomMargin: 40 });
+            const bounds = this.clusterer.getBounds();
+            if (bounds) {
+                this.map.setBounds(bounds, { checkZoomRange: true, zoomMargin: 40 });
+            }
         } catch (e) {
             console.warn('setBounds failed:', e);
         }

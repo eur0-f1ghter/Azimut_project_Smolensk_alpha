@@ -55,7 +55,11 @@ class DataLoader {
             vehiclesMap[vehicleId].route.push({
                 detector_id: detector.ID_детектора || detector.detector_id,
                 timestamp: new Date(detector.Временная_метка || detector.timestamp),
-                speed: parseFloat((detector.Скорость_прохождения || detector.speed || '0').replace(',', '.')),
+                speed: (() => {
+                    const v = detector.Скорость_прохождения ?? detector.speed ?? '0';
+                    const n = Number(String(v).replace(',', '.'));
+                    return Number.isFinite(n) ? n : 0;
+                })(),
                 lat: detector.lat,
                 lon: detector.lon
             });

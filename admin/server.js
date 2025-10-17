@@ -31,6 +31,53 @@ function findColumnKey(rowKeys, candidates) {
     return null;
 }
 
+// ---------- Safe parsing helpers ----------
+function parseNumberFlexible(v) {
+    if (v == null) return null;
+    const n = Number(String(v).trim().replace(',', '.'));
+    return Number.isFinite(n) ? n : null;
+}
+
+function parseDateSafe(raw) {
+    if (raw == null) return null;
+    // Excel serial date
+    if (typeof raw === 'number' && isFinite(raw)) {
+        // Excel serial dates: days since 1899-12-30
+        const excelEpoch = new Date(Date.UTC(1899, 11, 30));
+        const ms = raw * 24 * 3600 * 1000;
+        const d = new Date(excelEpoch.getTime() + ms);
+        return isNaN(d.getTime()) ? null : d;
+    }
+    let s = String(raw).trim();
+    if (!s) return null;
+    // Replace space between date and time to ensure ISO parsing
+    if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$/.test(s)) {
+        s = s.replace(' ', 'T');
+    }
+    const d = new Date(s);
+    return isNaN(d.getTime()) ? null : d;
+}
+
+function parseHHMMToDate(hhmm) {
+    if (!hhmm || typeof hhmm !== 'string') return null;
+    const m = hhmm.match(/^\s*(\d{1,2}):(\d{2})\s*$/);
+    if (!m) return null;
+    const h = Number(m[1]);
+    const min = Number(m[2]);
+    if (!Number.isFinite(h) || !Number.isFinite(min)) return null;
+    return new Date(1970, 0, 1, h, min, 0, 0);
+}
+
+function ensureISOorNull(d) {
+    if (!d || isNaN(d.getTime())) return null;
+    try { return d.toISOString(); } catch (_) { return null; }
+}
+
+function minutesOfDay(d) {
+    if (!d || isNaN(d.getTime())) return null;
+    return d.getHours() * 60 + d.getMinutes();
+}
+
 app.post('/upload', upload.single('file'), (req, res) => {
     if (!req.file) return res.status(400).json({ error: 'file not provided' });
 
@@ -70,9 +117,9 @@ app.post('/upload', upload.single('file'), (req, res) => {
             const rawLat = row[latCol];
             const rawLon = row[lonCol];
             if (rawLat == null || rawLon == null) continue;
-            const lat = parseFloat(rawLat);
-            const lon = parseFloat(rawLon);
-            if (Number.isNaN(lat) || Number.isNaN(lon)) continue;
+            const lat = parseNumberFlexible(rawLat);
+            const lon = parseNumberFlexible(rawLon);
+            if (!Number.isFinite(lat) || !Number.isFinite(lon)) continue;
             const name = row[nameCol] != null ? String(row[nameCol]) : '';
             detectors.push({ name, lat, lon });
         }
@@ -88,12 +135,17 @@ app.post('/upload', upload.single('file'), (req, res) => {
 function filterByTimeRange(detectors, startTime, endTime) {
     if (!startTime || !endTime) return detectors;
 
-    const start = new Date(startTime);
-    const end = new Date(endTime);
+    const start = parseHHMMToDate(startTime);
+    const end = parseHHMMToDate(endTime);
+    if (!start || !end) return detectors;
+    const startM = minutesOfDay(start);
+    const endM = minutesOfDay(end);
 
     return detectors.filter(d => {
-        const timestamp = new Date(d.Временная_метка);
-        return timestamp >= start && timestamp <= end;
+        const ts = parseDateSafe(d.Временная_метка || d.timestamp || d.time || d.timeStamp);
+        const m = minutesOfDay(ts);
+        if (m == null) return false;
+        return m >= startM && m <= endM;
     });
 }
 
@@ -106,14 +158,23 @@ class TrafficConvoyAnalyzer {
 
     preprocessData() {
         // Нормализация и предварительная обработка данных
-        this.processedData = this.originalData.map(row => ({
-            ID_детектора: row.ID_детектора,
-            Временная_метка: new Date(row.Временная_метка).toISOString(),
-            Идентификатор_ТС: row.Идентификатор_ТС,
-            Скорость_прохождения: row.Скорость_прохождения ? parseFloat(row.Скорость_прохождения) : null,
-            lat: row.lat || 54.776103 + (Math.random() - 0.5) * 0.1,
-            lon: row.lon || 32.056252 + (Math.random() - 0.5) * 0.1
-        })).filter(d => d.ID_детектора && d.Идентификатор_ТС);
+        this.processedData = this.originalData.map(row => {
+            const id = row.ID_детектора ?? row.detectorId ?? row.detector ?? row.id;
+            const veh = row.Идентификатор_ТС ?? row.vehicle_id ?? row.vehicleId ?? row.vehicle;
+            const tsRaw = row.Временная_метка ?? row.timestamp ?? row.time ?? row.timeStamp;
+            const ts = parseDateSafe(tsRaw);
+            const speed = parseNumberFlexible(row.Скорость_прохождения ?? row.speed ?? row.Speed);
+            const lat = parseNumberFlexible(row.lat);
+            const lon = parseNumberFlexible(row.lon);
+            return {
+                ID_детектора: id,
+                Временная_метка: ensureISOorNull(ts),
+                Идентификатор_ТС: veh,
+                Скорость_прохождения: speed,
+                lat: Number.isFinite(lat) ? lat : 54.776103 + (Math.random() - 0.5) * 0.1,
+                lon: Number.isFinite(lon) ? lon : 32.056252 + (Math.random() - 0.5) * 0.1
+            };
+        }).filter(d => d.ID_детектора && d.Идентификатор_ТС);
     }
 
     findConvoys() {
@@ -130,8 +191,13 @@ class TrafficConvoyAnalyzer {
             } else {
                 const convoyData = detectorMap.get(Идентификатор_ТС);
                 convoyData.convoy.push(ID_детектора);
-                convoyData.Временная_метка = new Date(Math.min(new Date(convoyData.Временная_метка), new Date(Временная_метка))).toISOString();
-                convoyData.Скорость_прохождения = Math.max(convoyData.Скорость_прохождения, Скорость_прохождения);
+                const d1 = parseDateSafe(convoyData.Временная_метка);
+                const d2 = parseDateSafe(Временная_метка);
+                const minD = (d1 && d2) ? new Date(Math.min(d1.getTime(), d2.getTime())) : (d1 || d2 || null);
+                convoyData.Временная_метка = ensureISOorNull(minD);
+                const s1 = Number.isFinite(convoyData.Скорость_прохождения) ? convoyData.Скорость_прохождения : null;
+                const s2 = Number.isFinite(Скорость_прохождения) ? Скорость_прохождения : null;
+                convoyData.Скорость_прохождения = Math.max(s1 ?? 0, s2 ?? 0);
                 convoyData.lat = (convoyData.lat + lat) / 2;
                 convoyData.lon = (convoyData.lon + lon) / 2;
             }

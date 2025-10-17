@@ -130,7 +130,13 @@
                     <option value="">Выберите целевое ТС</option>
                 </select>
                 <button id="analyzeJointBtn">Найти совместное движение</button>
+                <button id="simulateConvoyBtn" title="Сгенерировать тестовые данные с конвоями">Смоделировать конвои</button>
                 <div id="jointResults"></div>
+            </div>
+            <div class="section">
+                <h3>4. Построение маршрута</h3>
+                <button onclick="buildRouteFromUploadedData()">Построить маршрут из данных</button>
+                <button onclick="clearRoutes()">Очистить маршруты</button>
             </div>
             <div class="section">
                 <h3>5. Популярные маршруты</h3>
@@ -152,6 +158,7 @@
 
     <script src="scripts/data-loader.js"></script>
     <script src="scripts/convoyAnalyzer.js"></script>
+    <script src="scripts/routeBuilder.js"></script>
     <script src="scripts/map.js"></script>
     <script src="scripts/loadAnalysis.js"></script>
     <script src="scripts/popularRoutesAnalyzer.js"></script>

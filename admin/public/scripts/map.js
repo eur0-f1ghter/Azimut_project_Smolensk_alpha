@@ -1,5 +1,5 @@
-let map;
-let clusterer;
+window.map = window.map || null;
+window.clusterer = window.clusterer || null;
 let detectorData = [];
 let convoyData = [];
 
@@ -68,6 +68,7 @@ ymaps.ready(() => {
         center: [54.776103, 32.056252],
         zoom: 10
     });
+    window.map = map;
 
     // Создаем кластеризатор
     clusterer = new ymaps.Clusterer({
@@ -78,6 +79,7 @@ ymaps.ready(() => {
             '<div style="margin: 5px;"><b>{{ properties.name || "Без имени" }}</b><br/>{{ properties.lat.toFixed(6) }}, {{ properties.lon.toFixed(6) }}</div>'
         )
     });
+    window.clusterer = clusterer;
 
     map.geoObjects.add(clusterer);
     console.log('Карта и кластеризатор инициализированы');

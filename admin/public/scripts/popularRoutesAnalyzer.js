@@ -171,11 +171,11 @@ class PopularRoutesAnalyzer {
             stats.push({
                 rank: i + 1,
                 route: route,
-                total_vehicles: totalVehicles,
-                intensity_per_hour: Number(intensity.toFixed(2)),
-                avg_speed_kmh: Number(avgSpeed.toFixed(2)),
-                avg_duration_min: Number(avgDuration.toFixed(2)),
-                route_length: route.length
+                totalVehicles: totalVehicles,
+                intensityPerHour: Number(intensity.toFixed(2)),
+                avgSpeedKmh: Number(avgSpeed.toFixed(2)),
+                avgDurationMin: Number(avgDuration.toFixed(2)),
+                routeLength: route.length
             });
         });
         return stats;
@@ -232,21 +232,24 @@ function visualizePopularRoutes(stats) {
                 balloonContent: `
                     <b>Маршрут #${stat.rank}</b><br>
                     Детекторы: ${stat.route.join(' -> ')}<br>
-                    ТС: ${stat.total_vehicles}<br>
-                    Интенсивность: ${stat.intensity_per_hour} ТС/час<br>
-                    Ср. скорость: ${stat.avg_speed_kmh} км/ч<br>
-                    Ср. время: ${stat.avg_duration_min} мин
+                    ТС: ${stat.totalVehicles ?? stat.total_vehicles}<br>
+                    Интенсивность: ${(stat.intensityPerHour ?? stat.intensity_per_hour)} ТС/час<br>
+                    Ср. скорость: ${(stat.avgSpeedKmh ?? stat.avg_speed_kmh)} км/ч<br>
+                    Ср. время: ${(stat.avgDurationMin ?? stat.avg_duration_min)} мин
                 `
             }, {
                 strokeColor: getColorForRank(stat.rank),
-                strokeWidth: 3 + stat.intensity_per_hour,
+                strokeWidth: 3 + (stat.intensityPerHour ?? stat.intensity_per_hour),
                 strokeOpacity: 0.8
             });
             window._popularRouteCollection.add(polyline);
         }
     });
     try {
-        window.map.setBounds(window._popularRouteCollection.getBounds(), { checkZoomRange: true, zoomMargin: 40 });
+        const bounds = window._popularRouteCollection.getBounds();
+        if (bounds) {
+            window.map.setBounds(bounds, { checkZoomRange: true, zoomMargin: 40 });
+        }
     } catch (e) {
         console.warn('setBounds failed:', e);
     }
@@ -257,5 +260,31 @@ function getColorForRank(rank) {
     return colors[(rank - 1) % colors.length];
 }
 
+// Store route stats globally for graph visualization
+window.routeStats = [];
+
+// Update analyzeTimeRange to store routeStats globally
+async function analyzeTimeRange() {
+    const startTime = document.getElementById('routeStartTime').value;
+    const endTime = document.getElementById('routeEndTime').value;
+    const topN = parseInt(document.getElementById('topRoutesCount').value) || 10;
+
+    if (!window.allDetectorsData.length) {
+        alert('Сначала загрузите данные');
+        return;
+    }
+
+    const analyzer = new TrafficConvoyAnalyzer(window.allDetectorsData);
+    const filteredData = analyzer.filterByTimeRange(startTime, endTime);
+    const routeStats = analyzer.analyzeRoutes(filteredData, topN);
+
+    // Store globally for graph visualization
+    window.routeStats = routeStats;
+
+    // Visualize routes on map
+    visualizeRoutes(routeStats);
+}
+
 window.analyzePopularRoutes = analyzePopularRoutes;
 window.visualizePopularRoutes = visualizePopularRoutes;
+window.analyzeTimeRange = analyzeTimeRange;
