@@ -26,6 +26,25 @@ function parseHHMMtoMinutes(hhmm) {
     return h * 60 + mi;
 }
 
+// Helper: simple convoy counter by identical day and time (minute precision)
+function countConvoysBySameMinute(rows) {
+    if (!Array.isArray(rows) || rows.length === 0) return 0;
+    const buckets = new Map();
+    const pad = n => String(n).padStart(2, '0');
+
+    rows.forEach(r => {
+        const tsRaw = r.Временная_метка ?? r.timestamp ?? r.time ?? r.timeStamp ?? r.timestampISO;
+        const d = parseDateSafeClient(tsRaw);
+        if (!d) return;
+        const key = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        buckets.set(key, (buckets.get(key) || 0) + 1);
+    });
+
+    let convoys = 0;
+    buckets.forEach(cnt => { if (cnt >= 2) convoys++; });
+    return convoys;
+}
+
 class TrafficConvoyAnalyzer {
     constructor(data) {
         this.data = data;
@@ -88,9 +107,46 @@ class TrafficConvoyAnalyzer {
         const validPairs = this._filterPairs(candidatePairs, minCommonDetectors);
         console.log(`Found ${validPairs.size} valid pairs`);
 
-        // Build convoys from valid pairs
-        const convoys = this._buildConvoys(validPairs, minConvoySize);
+        // Build convoys from valid pairs with timestamp equality check
+        const convoys = this._buildConvoysWithTimestampEquality(validPairs, minConvoySize);
 
+        return convoys;
+    }
+
+    _buildConvoysWithTimestampEquality(validPairs, minConvoySize) {
+        const convoys = new Map();
+        let convoyCounter = 0;
+
+        // Группируем пары по временным меткам
+        const timestampGroups = new Map();
+
+        for (const [pairKey, pairData] of validPairs.entries()) {
+            const [obj1, obj2] = pairKey.split('-');
+            const timestamp = pairData.timestamp; // предполагаем, что timestamp есть в pairData
+
+            if (!timestampGroups.has(timestamp)) {
+                timestampGroups.set(timestamp, new Set());
+            }
+
+            // Добавляем оба объекта в группу с одинаковой временной меткой
+            timestampGroups.get(timestamp).add(obj1);
+            timestampGroups.get(timestamp).add(obj2);
+        }
+
+        // Создаем конвои для каждой временной метки
+        for (const [timestamp, objects] of timestampGroups.entries()) {
+            if (objects.size >= minConvoySize) {
+                const convoyId = `convoy_${++convoyCounter}`;
+                convoys.set(convoyId, {
+                    id: convoyId,
+                    objects: Array.from(objects),
+                    timestamp: timestamp,
+                    size: objects.size
+                });
+            }
+        }
+
+        console.log(`Built ${convoys.size} convoys with timestamp equality requirement`);
         return convoys;
     }
 
@@ -576,7 +632,9 @@ document.getElementById('uploadBtn1').addEventListener('click', async () => {
         // Обновляем карту - показываем ВСЕ детекторы
         updateAllDetectorsOnMap();
 
-        status.textContent = `Загружено детекторов: ${window.allDetectorsData.length}. Найдено конвоев: ${convoys.length}`;
+        const vehiclesCnt = new Set(rows.map(r => (r.Идентификатор_ТС ?? r.vehicleId ?? r.vehicle ?? r.vehicle_id))).size;
+        const convoysCnt = countConvoysBySameMinute(rows);
+        status.textContent = `Найдено конвоев: ${convoysCnt}`;
 
     } catch (e) {
         console.error('Error:', e);
@@ -654,6 +712,7 @@ function showConvoysOnMap() {
                         <b>КОНВОЙ #${i + 1}</b><br/>
                         <b>Детектор ${name}</b><br/>
                         Машины: ${convoy.vehicles.join(', ')}<br/>
+                        Размер конвоя: ${convoy.size} ТС<br/>
                         Длительность: ${convoy.durationMinutes} мин<br/>
                         Общих детекторов: ${convoy.commonDetectorsCount}
                     `
@@ -1137,7 +1196,9 @@ function simulateConvoys(options = {}) {
 
     const status = document.getElementById('fileInfo1') || document.getElementById('status');
     if (status) {
-        status.textContent = `Смоделировано событий: ${rows.length}. ТС: ${new Set(rows.map(r => r.Идентификатор_ТС)).size}. Найдено конвоев: ${window.convoyData.length}`;
+        const vehiclesCnt = new Set(rows.map(r => r.Идентификатор_ТС)).size;
+        const convoysCnt = countConvoysBySameMinute(rows);
+        status.textContent = `Найдено конвоев: ${convoysCnt}`;
     }
 }
 
