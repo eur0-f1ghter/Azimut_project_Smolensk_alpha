@@ -2,11 +2,13 @@ FROM node:18-alpine
 LABEL authors="Azimut Team"
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm install --production
+RUN ls -la
+RUN npm install
 RUN mkdir -p /usr/src/app/admin .
 RUN mkdir -p /usr/src/app/admin/public .
 RUN mkdir -p /usr/src/app/admin/public/scripts .
 RUN mkdir -p /usr/src/app/admin/public/style .
+RUN npm install
 COPY admin/server.js . /usr/src/app/admin/
 COPY admin/public/scripts/app.js .  /usr/src/app/admin/public/scripts/
 COPY admin/public/scripts/convoyAnalyzer.js . /usr/src/app/admin/public/scripts/
